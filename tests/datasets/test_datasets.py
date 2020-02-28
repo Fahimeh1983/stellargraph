@@ -146,3 +146,17 @@ def test_cora_load(is_directed) -> None:
         "Rule_Learning",
         "Theory",
     }
+
+
+def test_pubmeddiabetes_load() -> None:
+    g, labels = PubMedDiabetes().load()
+
+    n_nodes = 19717
+
+    assert g.number_of_nodes() == n_nodes
+    assert g.number_of_edges() == 44338
+
+    assert g.node_feature_sizes() == {"paper": 500}
+
+    assert len(labels) == n_nodes
+    assert set(labels.index) == set(g.nodes())
