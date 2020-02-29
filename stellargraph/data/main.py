@@ -10,14 +10,7 @@ from stellargraph.core.graph import StellarDiGraph, StellarGraph
 ################### Initialization ##########################
 #############################################################
 
-graph_dir = "/home/pogo/work_dir/NPP-GNN-project/dat/graphs/"
-w_dir = "/home/pogo/work_dir/NPP-GNN-project/dat/Interaction_mats/VISp/Adcyap1-Adcyap1r1.csv"
-region = "VISp"
-
-
-w_mat = pd.read_csv(w_dir, index_col="Unnamed: 0")
-edge_dir = os.path.join(graph_dir, region, 'Adcyap1-Adcyap1r1', "edges.csv")
-tmp_edge = pd.read_csv(edge_dir, index_col="Unnamed: 0")
+tmp_edge = pd.read_csv("edges.csv", index_col="Unnamed: 0")
 tmp_edge['source'] = tmp_edge['source'].astype(str)
 tmp_edge['target'] = tmp_edge['target'].astype(str)
 g = nx.DiGraph()

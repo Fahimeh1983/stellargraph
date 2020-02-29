@@ -318,13 +318,13 @@ class BiasedDirectedRandomWalk(GraphWalk):
                         if not isinstance(weight, (int, float)):
                             self._raise_error(
                                 "Edge weight between nodes ({}) and ({}) is not numeric ({}).".format(
-                                    node, neighbor, weight
+                                    node, out_neighbor, weight
                                 )
                             )
                         if weight < 0:  # check if edge has a negative weight
                             self._raise_error(
                                 "An edge weight between nodes ({}) and ({}) is negative ({}).".format(
-                                    node, neighbor, weight
+                                    node, out_neighbor, weight
                                 )
                             )
 
@@ -333,7 +333,7 @@ class BiasedDirectedRandomWalk(GraphWalk):
                         # multigraph with different weights on edges between same pair of nodes
                         self._raise_error(
                             "({}) and ({}) have multiple edges with weights ({}). Ambiguous to choose an edge for the random walk.".format(
-                                node, neighbor, list(wts)
+                                node, out_neighbor, list(wts)
                             )
                         )
 
@@ -346,10 +346,10 @@ class BiasedDirectedRandomWalk(GraphWalk):
                 # the walk starts at the root
                 walk = [node]
 
-                neighbours = self.neighbors(node)
+                out_neighbours = self.out_nodes(node)
 
                 previous_node = node
-                previous_node_neighbours = neighbours
+                previous_node_neighbours = out_neighbours
 
                 # calculate the appropriate unnormalised transition
                 # probability, given the history of the walk
@@ -368,8 +368,8 @@ class BiasedDirectedRandomWalk(GraphWalk):
                     else:  # d_tx = 2
                         return iq * weight_cn
 
-                if neighbours:
-                    current_node = rs.choice(neighbours)
+                if out_neighbours:
+                    current_node = rs.choice(out_neighbours)
                     for _ in range(length - 1):
                         walk.append(current_node)
                         neighbours = self.neighbors(current_node)
@@ -492,7 +492,7 @@ class BiasedRandomWalk(GraphWalk):
                 # the walk starts at the root
                 walk = [node]
 
-                neighbours = self.neighbors(node)
+                neighbours = self.out_nodes(node)
 
                 previous_node = node
                 previous_node_neighbours = neighbours
