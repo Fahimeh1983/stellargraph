@@ -3,8 +3,8 @@ import os
 import pandas as pd
 import networkx as nx
 
-from stellargraph.stellargraph.data.explorer import BiasedRandomWalk, BiasedDirectedRandomWalk
-from stellargraph.stellargraph.core.graph import StellarDiGraph, StellarGraph
+from stellargraph.data.explorer import BiasedRandomWalk, BiasedDirectedRandomWalk
+from stellargraph.core.graph import StellarDiGraph, StellarGraph
 
 #############################################################
 ################### Initialization ##########################
