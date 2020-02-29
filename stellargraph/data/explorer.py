@@ -372,9 +372,9 @@ class BiasedDirectedRandomWalk(GraphWalk):
                     current_node = rs.choice(out_neighbours)
                     for _ in range(length - 1):
                         walk.append(current_node)
-                        neighbours = self.neighbors(current_node)
+                        out_neighbours = self.out_nodes(current_node)
 
-                        if not neighbours:
+                        if not out_neighbours:
                             break
 
                         # select one of the neighbours using the
@@ -383,13 +383,13 @@ class BiasedDirectedRandomWalk(GraphWalk):
                             rs,
                             (
                                 transition_probability(nn, current_node, weighted)
-                                for nn in neighbours
+                                for nn in out_neighbours
                             ),
                         )
 
                         previous_node = current_node
-                        previous_node_neighbours = neighbours
-                        current_node = neighbours[choice]
+                        previous_node_neighbours = out_neighbours
+                        current_node = out_neighbours[choice]
 
                 walks.append(walk)
 
