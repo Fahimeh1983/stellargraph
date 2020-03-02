@@ -263,6 +263,25 @@ def naive_weighted_choices(rs, weights):
 
     return idx
 
+class layer_node_importance(GraphWalk):
+    """
+    For each node, we compute the the importance of that node in each layer.
+    """
+    def run (self):
+
+        layer_node_imp = {}
+        for node in self.graph.nodes():
+            outgoing_n = self.out_nodes(node)
+            outgoing_w = 0
+            for o_n in outgoing_n:
+                outgoing_w  += self.graph._edge_weights(node, o_n)[0]
+            layer_node_imp[node] = outgoing_w
+
+        total = sum(layer_node_imp.values(), 0.0)
+        layer_node_imp = {k: v / total for k, v in layer_node_imp.items()}
+
+        return layer_node_imp
+
 class BiasedDirectedRandomWalk(GraphWalk):
     """
     The same as biased random walk, but it will take a directed graph
@@ -286,7 +305,6 @@ class BiasedDirectedRandomWalk(GraphWalk):
             List of lists of nodes ids for each of the random walks
 
         """
-        print("I am here!!!!!!!!!!!!!!1")
         self._check_common_parameters(nodes, n, length, seed)
         self._check_weights(p, q, weighted)
         rs = self._get_random_state(seed)
